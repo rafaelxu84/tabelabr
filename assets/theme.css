@@ -1,0 +1,469 @@
+/* PKSport Hextech 设计系统 — 自包含 theme.css(tokens+base+bridge)。由 apply_theme 复制到 site/assets/theme.css。 */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+@font-face{font-family:'Mona Sans';font-weight:200 900;font-stretch:75% 125%;font-style:normal;font-display:swap;src:url('/assets/fonts/Mona-Sans.var.woff2') format('woff2');}
+/* ===== tokens/colors ===== */
+/* ============================================================
+   PKSport — COLOR SYSTEM  ·  HEXTECH EDITION
+   A League-of-Legends-grade hextech treatment grounded on the
+   PKSport pitch: deep desaturated green-black surfaces, an
+   antique-gold framing ramp, cream "engraved" text, a magical
+   hextech-cyan glow for live/data energy, and the brand yellow
+   kept as the brightest "active gold". Gold + green + magic.
+   ============================================================ */
+:root {
+  /* ---- Surfaces (deep, moody — darkest → raised) ---- */
+  --pk-pitch-900: #020a06;   /* @kind color */  /* void / body */
+  --pk-pitch-800: #04130a;   /* @kind color */  /* app background (deeper) */
+  --pk-pitch-700: #06150c;   /* @kind color */  /* sunken panel */
+  --pk-pitch-600: #0a2315;   /* @kind color */  /* card interior */
+  --pk-pitch-500: #0e3020;   /* @kind color */  /* raised / hover */
+  --pk-pitch-400: #16462e;   /* @kind color */  /* highest */
+
+  /* ---- Hextech gold ramp (frames, ornaments, headings) ---- */
+  --pk-gold-deep:   #7a5c2a; /* @kind color */  /* frame base / dim */
+  --pk-gold:        #D0B074; /* @kind color */  /* primary gold (brighter) */
+  --pk-gold-bright: #E2C16A; /* @kind color */  /* active gold */
+  --pk-cream:       #F4ECDA; /* @kind color */  /* engraved highlight / titles */
+  --pk-bronze:      #463714; /* @kind color */  /* deepest frame shadow */
+
+  /* ---- Hextech magic (live / data energy) ---- */
+  --pk-hex:      #0AC8B9;    /* @kind color */  /* hextech cyan */
+  --pk-hex-blue: #0397AB;    /* @kind color */  /* hextech deep */
+
+  /* ---- Lines / frames ---- */
+  --pk-line:        #785A28; /* @kind color */  /* default frame = gold */
+  --pk-line-soft:   #3a3018; /* @kind color */  /* dim divider */
+  --pk-line-strong: #C8AA6E; /* @kind color */  /* bright frame */
+
+  /* ---- Ink ---- */
+  --pk-text:   #F0E6D2;      /* @kind color */  /* primary = cream */
+  --pk-muted:  #A09B8C;      /* @kind color */  /* secondary (warm grey) */
+  --pk-faint:  #6b6552;      /* @kind color */  /* tertiary */
+  --pk-ink-invert: #050f08;  /* @kind color */  /* text on gold/yellow */
+
+  /* ---- Brand accents ---- */
+  --pk-yellow:      #ffd400; /* @kind color */  /* brightest active gold / CTA */
+  --pk-yellow-soft: #fff4b0; /* @kind color */
+  --pk-yellow-dim:  #b89a00; /* @kind color */
+  --pk-lime:        #c2f04a; /* @kind color */  /* fresh / positive secondary */
+  --pk-lime-dim:    #8fbf1f; /* @kind color */
+
+  /* ---- Match / prediction semantics ---- */
+  --pk-win:   #2FD46E;       /* @kind color */  /* vivid pitch green */
+  --pk-draw:  #8C93A0;       /* @kind color */  /* neutral slate (distinct from gold) */
+  --pk-loss:  #E0524B;       /* @kind color */  /* bright ruby */
+  --pk-warn:  #E8A23D;       /* @kind color */  /* amber caution */
+  --pk-home:  var(--pk-gold);/* @kind color */  /* home = gold */
+  --pk-away:  #19D3C5;       /* @kind color */  /* away = hextech cyan */
+  --pk-info:  #19D3C5;       /* @kind color */
+
+  /* ---- Categorical data palette (charts, legends) ---- */
+  --pk-data-1: var(--pk-gold); /* @kind color */  /* gold */
+  --pk-data-2: #19D3C5;      /* @kind color */  /* hex cyan */
+  --pk-data-3: #c2f04a;      /* @kind color */  /* lime */
+  --pk-data-4: #E0524B;      /* @kind color */  /* ruby */
+  --pk-data-5: #A98BE0;      /* @kind color */  /* arcane violet */
+  --pk-data-6: #F4ECDA;      /* @kind color */  /* cream */
+
+  /* ---- Translucent tints ---- */
+  --pk-yellow-15: rgba(255,212,0,.15);   /* @kind color */
+  --pk-yellow-08: rgba(255,212,0,.08);   /* @kind color */
+  --pk-gold-15:   rgba(200,170,110,.15); /* @kind color */
+  --pk-lime-15:   rgba(194,240,74,.15);  /* @kind color */
+  --pk-hex-15:    rgba(10,200,185,.16);  /* @kind color */
+  --pk-win-15:    rgba(47,212,110,.15);  /* @kind color */
+  --pk-loss-15:   rgba(224,82,75,.16);   /* @kind color */
+  --pk-warn-15:   rgba(232,162,61,.16);  /* @kind color */
+  --pk-scrim:     rgba(3,16,10,.78);     /* @kind color */
+
+  /* ---- Semantic aliases ---- */
+  --bg-app:       var(--pk-pitch-800);
+  --bg-sunken:    var(--pk-pitch-700);
+  --surface-card: var(--pk-pitch-600);
+  --surface-raised:var(--pk-pitch-500);
+  --border:       var(--pk-line);
+  --border-soft:  var(--pk-line-soft);
+  --text-primary: var(--pk-text);
+  --text-muted:   var(--pk-muted);
+  --text-faint:   var(--pk-faint);
+  --accent:       var(--pk-gold);
+  --accent-2:     var(--pk-hex);
+
+  color-scheme: dark;
+}
+/* ===== tokens/typography ===== */
+/* ============================================================
+   PKSport — TYPOGRAPHY
+   Mona Sans does the whole job. Display/headings use the
+   EXPANDED width axis (font-stretch:125%) with tight tracking
+   for a confident, sporty headline voice; body stays at normal
+   width for comfortable reading. Stats use tabular figures.
+   ============================================================ */
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Cinzel', 'Times New Roman', 'Noto Color Emoji', serif;  /* engraved hextech titles */
+  --font-serif:   'Cinzel', 'Times New Roman', serif;
+  --font-emoji:   'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  --font-body:    'Mona Sans', ui-sans-serif, system-ui, -apple-system,
+                  "PingFang SC", "Microsoft YaHei", "Segoe UI", 'Noto Color Emoji', sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, 'Noto Color Emoji', monospace;
+
+  /* ---- Width axis ---- */
+  --width-expanded: 125%;  /* @kind font */
+  --width-normal:   100%;  /* @kind font */
+  --width-condensed: 85%;  /* @kind font */
+
+  /* ---- Weights ---- */
+  --fw-light: 300;     /* @kind font */
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium: 500;    /* @kind font */
+  --fw-semibold: 600;  /* @kind font */
+  --fw-bold: 700;      /* @kind font */
+  --fw-black: 800;     /* @kind font */
+
+  /* ---- Type scale (px) ---- */
+  --fs-display: clamp(34px, 5vw, 56px); /* @kind font */
+  --fs-h1: 30px;       /* @kind font */
+  --fs-h2: 22px;       /* @kind font */
+  --fs-h3: 17px;       /* @kind font */
+  --fs-h4: 15px;       /* @kind font */
+  --fs-body: 15px;     /* @kind font */
+  --fs-sm: 13.5px;     /* @kind font */
+  --fs-xs: 12px;       /* @kind font */
+  --fs-2xs: 11px;      /* @kind font */
+  --fs-stat: 28px;     /* key-metric numerals @kind font */
+  --fs-stat-lg: 40px;  /* @kind font */
+
+  /* ---- Line heights ---- */
+  --lh-tight: 1.05;    /* @kind font */
+  --lh-snug: 1.2;      /* @kind font */
+  --lh-body: 1.6;      /* @kind font */
+  --lh-relaxed: 1.75;  /* @kind font */
+
+  /* ---- Tracking ---- */
+  --ls-display: -0.02em;  /* @kind font */
+  --ls-tight: -0.011em;   /* @kind font */
+  --ls-label: 0.06em;     /* uppercase eyebrows / TH @kind font */
+  --ls-caps: 0.12em;      /* @kind font */
+}
+/* ===== tokens/spacing ===== */
+/* ============================================================
+   PKSport — SPACING & LAYOUT
+   4px base grid. Generous, breathable rhythm so dense stat
+   blocks never feel cramped during long reading sessions.
+   ============================================================ */
+:root {
+  --sp-0: 0; /* @kind spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  /* ---- Container widths ---- */
+  --container-prose: 760px;   /* article / report column */
+  --container-app:   1080px;  /* dashboards / lists */
+  --container-wide:  1280px;  /* full kits */
+
+  /* ---- Component paddings ---- */
+  --pad-card: 22px;
+  --pad-card-sm: 14px;
+  --pad-tile: 12px;
+  --gutter: 14px;             /* default grid gap */
+}
+/* ===== tokens/effects ===== */
+/* ============================================================
+   PKSport — RADII, SHADOWS, MOTION
+   Dark UI: elevation comes from borders + subtle depth shadow,
+   not heavy drop shadows. Accent glows mark interactive/live
+   elements. Motion is brisk and confident with a sporty spring
+   for entrances; data animates IN (bars grow, numbers count) so
+   reading feels alive rather than static and tiring.
+   ============================================================ */
+:root {
+  /* ---- Radii (sharpened for the angular esports HUD look) ---- */
+  --r-xs: 2px;
+  --r-sm: 2px;
+  --r-md: 3px;
+  --r-lg: 3px;     /* default card — crisp, not soft */
+  --r-xl: 4px;     /* feature card */
+  --r-2xl: 6px;
+  --r-pill: 9999px;  /* reserved for dots / true rounds only */
+
+  /* ---- Borders ---- */
+  --bw: 1px;
+  --bw-accent: 3px;   /* accent left-rule on feature blocks */
+
+  /* ---- Shadows / depth ---- */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-card: 0 1px 0 rgba(255,255,255,.025) inset, 0 10px 30px -12px rgba(0,0,0,.55);
+  --shadow-pop: 0 18px 50px -16px rgba(0,0,0,.7);
+  --shadow-up: 0 6px 22px -10px rgba(0,0,0,.6);
+
+  /* ---- Accent glows (live / focus / highlight) ---- */
+  --glow-yellow: 0 0 0 3px rgba(255,212,0,.18);
+  --glow-lime:   0 0 0 3px rgba(194,240,74,.18);
+  --glow-win:    0 0 0 3px rgba(34,197,94,.18);
+  --glow-loss:   0 0 0 3px rgba(239,68,68,.18);
+  --ring-focus:  0 0 0 3px rgba(255,212,0,.4);
+
+  /* ---- Gradients ---- */
+  --grad-feature: linear-gradient(135deg, #103a26, #0c3320); /* @kind color */
+  --grad-pitch:   linear-gradient(180deg, #0a2e1c, #061d11); /* @kind color */
+  --grad-accent:  linear-gradient(90deg, #ffd400, #c2f04a); /* @kind color */
+  --grad-vs:      linear-gradient(90deg, #13632f, #1d3a63); /* @kind color */
+
+  /* ---- Motion ---- */
+  --dur-fast: 120ms; /* @kind other */
+  --dur: 180ms; /* @kind other */
+  --dur-slow: 320ms; /* @kind other */
+  --dur-data: 700ms; /* @kind other */
+  --ease-out: cubic-bezier(.16, 1, .3, 1); /* @kind other */
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1); /* @kind other */
+}
+
+/* ---- Reusable keyframes (shipped to consumers) ---- */
+@keyframes pk-grow-x   { from { opacity: .7; } to { opacity: 1; } }
+@keyframes pk-grow-w   { from { opacity: .7; } }
+@keyframes pk-fade-up  { from { transform: translateY(10px); } to { transform: none; } }
+@keyframes pk-fade-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pk-pulse    { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes pk-pop      { 0% { transform: scale(.55); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@keyframes pk-shimmer  { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+/* ===== tokens/shapes ===== */
+/* ============================================================
+   PKSport — HEXTECH FRAME SYSTEM
+   The League-client visual language: beveled (octagonal) panel
+   cuts, thin antique-gold gradient borders, the iconic center-
+   diamond ornamental divider, corner ornaments and magical glow.
+   Token names kept stable so all components inherit the frame.
+   ============================================================ */
+:root {
+  /* ---- Gold gradient (borders, text sheen, ornaments) ---- */
+  --grad-gold:       linear-gradient(180deg, #D0B074, #7a5c2a);   /* @kind color */
+  --grad-gold-bright:linear-gradient(180deg, #F4ECDA, #E2C16A);   /* @kind color */
+  --grad-gold-h:     linear-gradient(90deg, #7a5c2a, #D0B074 50%, #7a5c2a); /* @kind color */
+  --grad-feature:    linear-gradient(135deg, #0a2315, #07160d);   /* @kind color */
+  --grad-pitch:      linear-gradient(180deg, #051a0f, #03100a);   /* @kind color */
+  --grad-accent:     linear-gradient(90deg, #C8AA6E, #ffd400);    /* @kind color */
+  --grad-vs:         linear-gradient(90deg, #785A28, #0397AB);    /* @kind color */
+  --grad-hex:        linear-gradient(135deg, #0AC8B9, #0397AB);   /* @kind color */
+
+  /* ---- Beveled / octagonal panel clips (hextech corners) ---- */
+  --clip-panel:    polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px); /* @kind other */
+  --clip-panel-sm: polygon(9px 0, calc(100% - 9px) 0, 100% 9px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 9px 100%, 0 calc(100% - 9px), 0 9px); /* @kind other */
+  --clip-bevel-sm: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); /* @kind other */
+  --clip-tr:       polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); /* @kind other */
+  --clip-tr-sm:    polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%); /* @kind other */
+  --clip-tag:      polygon(0 0, 100% 0, calc(100% - 8px) 50%, 100% 100%, 0 100%); /* @kind other */
+  --clip-skew:     polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); /* @kind other */
+
+  /* ---- Magic glow / sheen ---- */
+  --skew: 0deg;            /* @kind other */
+  --skew-soft: 0deg;       /* @kind other */
+  --edge-accent: 2px;      /* @kind spacing */
+  --hud-glow:      0 0 20px -2px rgba(208,176,116,.6);   /* @kind shadow */  /* gold */
+  --hud-glow-lime: 0 0 22px -2px rgba(10,200,185,.7);    /* @kind shadow */  /* hex cyan */
+  --gold-glow:     0 0 0 1px rgba(208,176,116,.5), 0 0 22px -4px rgba(208,176,116,.7); /* @kind shadow */
+  --hex-glow:      0 0 26px -3px rgba(10,200,185,.85);   /* @kind shadow */
+
+  /* ---- Hexagon texture (subtle gold honeycomb) ---- */
+  --pk-hex-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='84' viewBox='0 0 48 84'%3E%3Cg fill='none' stroke='%23C8AA6E' stroke-opacity='0.05'%3E%3Cpath d='M24 2 L46 15 L46 41 L24 54 L2 41 L2 15 Z'/%3E%3Cpath d='M24 44 L46 57 L46 83 L24 96 L2 83 L2 57 Z'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+
+  /* ---- Diagonal stripes (kept for hazard accents) ---- */
+  --stripes-yellow: repeating-linear-gradient(-45deg, #C8AA6E 0 8px, transparent 8px 16px); /* @kind color */
+  --stripes-soft:   repeating-linear-gradient(-45deg, rgba(200,170,110,.16) 0 7px, transparent 7px 14px); /* @kind color */
+  --stripes-lime:   repeating-linear-gradient(-45deg, #0AC8B9 0 8px, transparent 8px 16px); /* @kind color */
+}
+
+/* ---- Gold ornamental divider (the iconic LoL section break) ----
+   <div class="pk-divider"></div>  — tapering gold lines + center diamond. */
+.pk-divider {
+  display: flex; align-items: center; justify-content: center; gap: 0; margin: 22px 0;
+}
+.pk-divider::before, .pk-divider::after {
+  content: ""; height: 1px; flex: 1; max-width: 50%;
+  background: linear-gradient(90deg, transparent, var(--pk-gold-deep) 40%, var(--pk-gold));
+}
+.pk-divider::after { transform: scaleX(-1); }
+.pk-divider > .pk-diamond, .pk-divider .gem {
+  width: 9px; height: 9px; margin: 0 10px; flex: none;
+  background: var(--pk-gold); transform: rotate(45deg);
+  box-shadow: 0 0 0 3px var(--pk-pitch-800), 0 0 0 4px var(--pk-gold-deep);
+}
+
+/* ---- Corner ornaments (small gold diamonds at panel corners) ----
+   <span class="pk-corner pk-corner--tl"></span> etc. */
+.pk-corner { position: absolute; width: 6px; height: 6px; background: var(--pk-gold); transform: rotate(45deg); z-index: 2; pointer-events: none; }
+.pk-corner--tl { top: 4px; left: 4px; }
+.pk-corner--tr { top: 4px; right: 4px; }
+.pk-corner--bl { bottom: 4px; left: 4px; }
+.pk-corner--br { bottom: 4px; right: 4px; }
+
+/* ---- Tactical corner brackets (now gold) ---- */
+.pk-bracket { position: absolute; width: 13px; height: 13px; pointer-events: none; z-index: 2; }
+.pk-bracket::before, .pk-bracket::after { content: ""; position: absolute; background: var(--pk-gold); }
+.pk-bracket::before { width: 100%; height: 1px; }
+.pk-bracket::after { width: 1px; height: 100%; }
+.pk-bracket--tl { top: 0; left: 0; }
+.pk-bracket--tr { top: 0; right: 0; }
+.pk-bracket--tr::before { right: 0; }
+.pk-bracket--tr::after { right: 0; }
+.pk-bracket--bl { bottom: 0; left: 0; }
+.pk-bracket--bl::before { bottom: 0; }
+.pk-bracket--br { bottom: 0; right: 0; }
+.pk-bracket--br::before { bottom: 0; right: 0; }
+.pk-bracket--br::after { right: 0; }
+
+/* ---- Kinetic slash → gold diamond separator ---- */
+.pk-slash { color: var(--pk-gold); font-weight: 700; margin: 0 .4em; opacity: .8; }
+
+/* ---- Hex honeycomb texture layer ---- */
+.pk-hexbg { background-image: var(--pk-hex-texture); background-size: 48px 84px; }
+
+/* ---- Gold light-sweep sheen (runs across panels / titles) ---- */
+.pk-sheen { position: relative; overflow: hidden; }
+.pk-sheen::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(244,236,218,.18) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: pk-sweep 4.5s var(--ease-in-out) infinite;
+}
+
+/* ---- Ornate keyframes ---- */
+@keyframes pk-sweep    { 0% { transform: translateX(-120%); } 55%,100% { transform: translateX(120%); } }
+@keyframes pk-rise     { from { transform: translateY(14px); } to { transform: none; } }
+@keyframes pk-glow-pulse { 0%,100% { filter: drop-shadow(0 0 3px rgba(10,200,185,.5)); } 50% { filter: drop-shadow(0 0 10px rgba(10,200,185,.95)); } }
+@keyframes pk-draw-x   { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes pk-draw-y   { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes pk-gem-spin { from { transform: rotate(45deg) scale(.4); opacity: 0; } to { transform: rotate(45deg) scale(1); opacity: 1; } }
+@keyframes pk-bob        { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes pk-float      { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(-3deg); } }
+@keyframes pk-emoji-pulse{ 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+@keyframes pk-glow-breathe { 0%,100% { box-shadow: inset 0 0 0 1px var(--pk-gold-deep); } 50% { box-shadow: inset 0 0 0 1px var(--pk-gold), 0 0 16px -4px var(--pk-gold); } }
+
+/* ---- Entrance: gold frame "draws" itself around a panel ---- */
+.pk-frame-in { position: relative; animation: pk-rise var(--dur-slow) var(--ease-out) both; }
+.pk-frame-in::before, .pk-frame-in::after { content: ""; position: absolute; pointer-events: none; z-index: 3; }
+.pk-frame-in::before { top: 0; left: 0; right: 0; height: 1px; background: var(--grad-gold-h); transform-origin: left; animation: pk-draw-x var(--dur-slow) var(--ease-out) both; }
+.pk-frame-in::after  { bottom: 0; left: 0; right: 0; height: 1px; background: var(--grad-gold-h); transform-origin: right; animation: pk-draw-x var(--dur-slow) var(--ease-out) 80ms both; }
+/* ===== tokens/base ===== */
+/* ============================================================
+   PKSport — BASE / RESET
+   Applies the brand defaults so any consumer page that links
+   styles.css inherits the pitch background, Mona Sans, and the
+   global typographic voice automatically.
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(10,200,185,.06), transparent 55%),
+    radial-gradient(140% 100% at 50% 120%, rgba(120,90,40,.12), transparent 60%),
+    var(--pk-hex-texture),
+    var(--bg-app);
+  background-size: auto, auto, 48px 84px, auto;
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-tight);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings → engraved hextech voice: Cinzel caps, gold, letter-spaced */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  color: var(--pk-cream);
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-h1); font-weight: 800; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+p { text-wrap: pretty; }
+
+a { color: var(--accent); text-decoration: none; }
+
+/* Emoji → consistent full-colour Noto glyphs */
+.pk-emoji { font-family: var(--font-emoji); font-weight: 400; font-style: normal; line-height: 1; }
+
+/* Numerals: tabular by default for clean stat alignment */
+table, .pk-tabular { font-variant-numeric: tabular-nums; }
+
+::selection { background: var(--pk-gold); color: var(--pk-ink-invert); }
+
+:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--pk-gold); border-radius: var(--r-xs); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--pk-line); border-radius: var(--r-pill); border: 2px solid var(--bg-app); }
+::-webkit-scrollbar-thumb:hover { background: var(--pk-line-strong); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+/* ============ BRIDGE — PKSport 生成器类 → 设计系统 ============ */
+.wrap{max-width:var(--container-app);margin:0 auto}
+.lead{color:var(--text-muted);font-size:var(--fs-body);border-bottom:1px solid var(--border-soft);padding-bottom:var(--sp-4);margin:var(--sp-2) 0 var(--sp-5);max-width:66ch}
+.lang,.lang a{color:var(--text-muted);font-size:var(--fs-xs);text-decoration:none}.lang b{color:var(--accent)}
+.crumb{font-size:var(--fs-xs);color:var(--text-muted);margin:2px 0 var(--sp-4)}.crumb a{color:var(--text-muted);text-decoration:none}.crumb a:hover{color:var(--accent)}.crumb span{color:var(--text-primary)}
+.card,.mc,.tool,.grp,.box,.exist,.summary,.insight,.note,.flag,.key,.chartbox,.lineup,.coach{background:var(--surface-card);border:1px solid var(--border-soft);border-radius:var(--r-lg);box-shadow:var(--shadow-card)}
+.feat{background:var(--grad-feature);border:1px solid var(--border-soft);border-left:var(--bw-accent) solid var(--accent);border-radius:var(--r-lg)}
+.feat .t,.card .t{color:var(--pk-cream);font-family:var(--font-display);text-transform:uppercase;letter-spacing:.03em}
+.feat .d,.card .d{color:var(--text-muted)}
+.grid{gap:var(--gutter)}
+.mrow{background:var(--surface-card);border:1px solid var(--border-soft);border-radius:var(--r-md)}
+.mrow:hover{border-color:var(--accent)}
+.mrow .nm{color:var(--text-primary)}
+.mrow .gp{background:var(--accent);color:var(--pk-ink-invert);border-radius:var(--r-sm)}
+.mrow .st.ft,.m .sc,.mrow .sc{color:var(--accent)}
+.mrow .go,.links a,.mlink .go,.daytab{color:var(--accent)}
+.daytab.active{background:var(--accent);color:var(--pk-ink-invert)}
+table{font-variant-numeric:tabular-nums}
+th{color:var(--text-muted);text-transform:uppercase;letter-spacing:var(--ls-label);font-weight:var(--fw-semibold);border-bottom:1px solid var(--border)}
+td{border-bottom:1px solid var(--border-soft)}
+td.t{font-weight:var(--fw-semibold)}
+tr:nth-child(-n+6) td.p,tr:nth-child(-n+4) td.pos{color:var(--accent);font-weight:var(--fw-bold)}
+.enh-nav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;padding:9px 0;margin:12px 0 4px;background:var(--bg-app);border-bottom:1px solid var(--border)}
+.enh-nav a{flex:0 0 auto;font-size:var(--fs-xs);color:var(--text-muted);border:1px solid var(--border-soft);border-radius:var(--r-pill);padding:4px 11px;text-decoration:none;white-space:nowrap}
+.enh-nav a:hover{color:var(--accent);border-color:var(--accent)}
+details.enh-sec>summary.enh-sum{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px}
+details.enh-sec>summary.enh-sum::-webkit-details-marker{display:none}
+details.enh-sec>summary.enh-sum::after{content:"\25be";color:var(--text-muted)}
+details.enh-sec[open]>summary.enh-sum::after{content:"\25b4"}
+.btn,button.gen,a.cta{border-radius:var(--r-sm);font-weight:var(--fw-semibold)}
+.badge{border-radius:var(--r-sm)}
+.foot{color:var(--text-muted);border-top:1px solid var(--border);font-size:var(--fs-xs);font-family:var(--font-body);text-transform:none}
+
+/* ---- Refinement(可读性): 史诗感留给 h1/h2;h3/h4 子标题回 Mona Sans 不全大写 ---- */
+h3{font-family:var(--font-body);text-transform:none;letter-spacing:-.01em;font-weight:var(--fw-bold);color:var(--pk-cream);font-size:var(--fs-h3)}
+h4{font-family:var(--font-body);text-transform:none;letter-spacing:0;font-weight:var(--fw-semibold);color:var(--pk-gold-bright);font-size:var(--fs-h4)}
+/* h1 长标题在窄屏收一点字号 */
+@media(max-width:560px){h1{font-size:25px}}
+
+/* ---- 移动端:宽表格可横向滑动,不撑破布局 ---- */
+@media(max-width:560px){
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  .wrap{overflow-x:hidden}
+  th,td{padding:7px 8px}
+}
